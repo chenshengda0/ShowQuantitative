@@ -1,0 +1,63 @@
+version: '3'
+
+networks:
+  dex-quantitative:
+    driver:
+      bridge
+
+services:
+
+  dev-haproxy:
+    hostname: dex-haproxy
+    build:
+      context: ./
+      dockerfile: haproxy/Dockerfile
+    environment:
+      - RABBITMQ_DEFAULT_USER=dream 
+      - RABBITMQ_DEFAULT_PASS=231510622abc
+      - PATH=$PATH:/opt/rabbitmq/sbin
+    ports:
+      - 5670:5670
+      - 35672:35672
+      - 35674:35674
+      - 9999:9999
+    networks:
+      - dex-quantitative
+
+  dev-mongo:
+    hostname: dex-mongo
+    image: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=231510622abc
+    volumes:
+      - ./mongo/db:/data/db
+      - ./mongo/configdb:/data/configdb
+    ports:
+      - 27017:27017
+    networks:
+      - dex-quantitative
+
+  dev-mongo-express:
+    image: mongo-express
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=dex-mongo
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=root
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=231510622abc
+    ports:
+      - 8081:8081
+    networks:
+      - dex-quantitative
+
+  dev-node:
+    hostname: dex-node
+    build:
+      context: ./
+      dockerfile: node-server/Dockerfile
+    ports:
+      - 8080:8080
+      - 9527:9527
+    volumes:
+      - ./build:/opt/build
+    networks:
+      - dex-quantitative

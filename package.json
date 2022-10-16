@@ -1,0 +1,10 @@
+{
+  "name": "install",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+
+  "scripts": {
+    "deploy": "scp -P 22 -r ../Install/* root@127.0.0.1:/home"
+  }
+}
