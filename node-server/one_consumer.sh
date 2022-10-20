@@ -72,7 +72,7 @@ for (( i = 0; i < 60; i=(i+step) )); do
     curl http://127.0.0.1:9527/consumer/polling_market
     curl http://127.0.0.1:9527/consumer/polling_market
     curl http://127.0.0.1:9527/consumer/polling_market
-}
+} &
     sleep $step
 
 done
