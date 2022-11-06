@@ -16,6 +16,8 @@ services:
       - 35672:35672
       - 35674:35674
       - 9999:9999
+    extra_hosts:
+      - host.docker.internal:host-gateway
     networks:
       - dex-quantitative
 
@@ -30,6 +32,8 @@ services:
       - ./mongo/configdb:/data/configdb
     ports:
       - 27017:27017
+    extra_hosts:
+      - host.docker.internal:host-gateway
     networks:
       - dex-quantitative
 
@@ -41,6 +45,36 @@ services:
       - ME_CONFIG_MONGODB_ADMINPASSWORD=231510622abc
     ports:
       - 8081:8081
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    networks:
+      - dex-quantitative
+
+  dev-mysql:
+    hostname: dex-mysql
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
+    volumes:
+      - ./mysql/datadir:/var/lib/mysql
+      - ./mysql/conf:/etc/mysql/conf.d
+      - ./mysql/init:/docker-entrypoint-initdb.d
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    networks:
+      - dex-quantitative
+
+  dev-phpmyadmin:
+    hostname: dex-phpmyadmin
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 8888:80
+    environment:
+      - PMA_ARBITRARY=1
+    extra_hosts:
+      - host.docker.internal:host-gateway
     networks:
       - dex-quantitative
 
@@ -54,6 +88,8 @@ services:
       - 9527:9527
     volumes:
       - ./build:/opt/build
+    extra_hosts:
+      - host.docker.internal:host-gateway
     networks:
       - dex-quantitative
 
