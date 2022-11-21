@@ -2,3 +2,4 @@ mongo/configdb/*
 mongo/db/*
 node_modules/*
 mysql/datadir/*
+build/*.md
