@@ -54,7 +54,7 @@ services:
     hostname: dex-mysql
     image: mysql:latest
     environment:
-      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_ROOT_PASSWORD=231510622abc
     command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
     volumes:
       - ./mysql/datadir:/var/lib/mysql
@@ -78,14 +78,110 @@ services:
     networks:
       - dex-quantitative
 
-  dev-node:
-    hostname: dex-node
+  dev-show:
+    hostname: dex-show
     build:
       context: ./
-      dockerfile: node-server/Dockerfile
+      dockerfile: dex-show/Dockerfile
     ports:
       - 8080:8080
       - 9527:9527
+    volumes:
+      - ./build:/opt/build
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    networks:
+      - dex-quantitative
+
+  dev-node-publish:
+    hostname: dex-node-publish
+    build:
+      context: ./
+      dockerfile: dex-node-publish/Dockerfile
+    volumes:
+      - ./build:/opt/build
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    networks:
+      - dex-quantitative
+
+  dev-node-consumer:
+    hostname: dex-node-consumer
+    build:
+      context: ./
+      dockerfile: dex-node-consumer/Dockerfile
+    volumes:
+      - ./build:/opt/build
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    networks:
+      - dex-quantitative
+
+  dev-node-consumer-node-zero:
+    hostname: dex-node-consumer-node-zero
+    build:
+      context: ./
+      dockerfile: dex-node-consumer-node-zero/Dockerfile
+    volumes:
+      - ./build:/opt/build
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    networks:
+      - dex-quantitative
+
+  dev-node-consumer-node-one:
+    hostname: dex-node-consumer-node-one
+    build:
+      context: ./
+      dockerfile: dex-node-consumer-node-one/Dockerfile
+    volumes:
+      - ./build:/opt/build
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    networks:
+      - dex-quantitative
+
+  dev-node-consumer-node-two:
+    hostname: dex-node-consumer-node-two
+    build:
+      context: ./
+      dockerfile: dex-node-consumer-node-two/Dockerfile
+    volumes:
+      - ./build:/opt/build
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    networks:
+      - dex-quantitative
+
+  dev-node-consumer-node-three:
+    hostname: dex-node-consumer-node-three
+    build:
+      context: ./
+      dockerfile: dex-node-consumer-node-three/Dockerfile
+    volumes:
+      - ./build:/opt/build
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    networks:
+      - dex-quantitative
+
+  dev-node-consumer-node-four:
+    hostname: dex-node-consumer-node-four
+    build:
+      context: ./
+      dockerfile: dex-node-consumer-node-four/Dockerfile
+    volumes:
+      - ./build:/opt/build
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    networks:
+      - dex-quantitative
+
+  dev-node-consumer-node-five:
+    hostname: dex-node-consumer-node-five
+    build:
+      context: ./
+      dockerfile: dex-node-consumer-node-five/Dockerfile
     volumes:
       - ./build:/opt/build
     extra_hosts:
