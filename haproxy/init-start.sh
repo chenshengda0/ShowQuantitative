@@ -19,24 +19,7 @@ rabbitmq-plugins --offline enable rabbitmq_web_stomp
 echo 2
 rabbitmq-plugins --offline enable rabbitmq_web_stomp_examples
 
-rabbitmqctl stop_app
-
 echo 3
-rabbitmqctl start_app
-
-echo 4
-rabbitmqctl add_user information information
-
-echo 5
-rabbitmqctl set_user_tags information management
-
-echo 6
-rabbitmqctl  set_permissions -p / information ".*" ".*" ".*"
-
-
-#执行screen
-screen -dmS haproxyServer
-screen -x -S haproxyServer -p 0 -X stuff $'sudo haproxy -f /opt/haproxy.cnf'
-screen -x -S haproxyServer -p 0 -X stuff $'\n'
+/opt/restart.sh
 
 echo "init-start end"

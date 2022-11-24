@@ -1,9 +1,15 @@
 version: '3'
 
-services:
 
+networks:
+  dex-quantitative:
+    driver:
+      bridge
+
+services:
   dev-haproxy:
     hostname: dex-haproxy
+    #restart: always
     build:
       context: ./
       dockerfile: haproxy/Dockerfile
@@ -21,37 +27,40 @@ services:
     networks:
       - dex-quantitative
 
-  dev-mongo:
-    hostname: dex-mongo
-    image: mongo
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=231510622abc
-    volumes:
-      - ./mongo/db:/data/db
-      - ./mongo/configdb:/data/configdb
-    ports:
-      - 27017:27017
-    extra_hosts:
-      - host.docker.internal:host-gateway
-    networks:
-      - dex-quantitative
+  # dev-mongo:
+  #   hostname: dex-mongo
+  #   restart: always
+  #   image: mongo
+  #   environment:
+  #     - MONGO_INITDB_ROOT_USERNAME=root
+  #     - MONGO_INITDB_ROOT_PASSWORD=231510622abc
+  #   volumes:
+  #     - ./mongo/db:/data/db
+  #     - ./mongo/configdb:/data/configdb
+  #   ports:
+  #     - 27017:27017
+  #   extra_hosts:
+  #     - host.docker.internal:host-gateway
+  #   networks:
+  #     - dex-quantitative
 
-  dev-mongo-express:
-    image: mongo-express
-    environment:
-      - ME_CONFIG_MONGODB_SERVER=dex-mongo
-      - ME_CONFIG_MONGODB_ADMINUSERNAME=root
-      - ME_CONFIG_MONGODB_ADMINPASSWORD=231510622abc
-    ports:
-      - 8081:8081
-    extra_hosts:
-      - host.docker.internal:host-gateway
-    networks:
-      - dex-quantitative
+  # dev-mongo-express:
+  #   restart: always
+  #   image: mongo-express
+  #   environment:
+  #     - ME_CONFIG_MONGODB_SERVER=dex-mongo
+  #     - ME_CONFIG_MONGODB_ADMINUSERNAME=root
+  #     - ME_CONFIG_MONGODB_ADMINPASSWORD=231510622abc
+  #   ports:
+  #     - 8081:8081
+  #   extra_hosts:
+  #     - host.docker.internal:host-gateway
+  #   networks:
+  #     - dex-quantitative
 
   dev-mysql:
     hostname: dex-mysql
+    restart: always
     image: mysql:latest
     environment:
       - MYSQL_ROOT_PASSWORD=231510622abc
@@ -67,8 +76,8 @@ services:
 
   dev-phpmyadmin:
     hostname: dex-phpmyadmin
-    image: phpmyadmin
     restart: always
+    image: phpmyadmin
     ports:
       - 8888:80
     environment:
@@ -80,6 +89,7 @@ services:
 
   dev-show:
     hostname: dex-show
+    #restart: always
     build:
       context: ./
       dockerfile: dex-show/Dockerfile
@@ -90,11 +100,15 @@ services:
       - ./build:/opt/build
     extra_hosts:
       - host.docker.internal:host-gateway
+    depends_on:
+      - dev-haproxy
+      - dev-mysql
     networks:
       - dex-quantitative
 
   dev-node-publish:
     hostname: dex-node-publish
+    #restart: always
     build:
       context: ./
       dockerfile: dex-node-publish/Dockerfile
@@ -102,11 +116,15 @@ services:
       - ./build:/opt/build
     extra_hosts:
       - host.docker.internal:host-gateway
+    depends_on:
+      - dev-haproxy
+      - dev-mysql
     networks:
       - dex-quantitative
 
   dev-node-consumer:
     hostname: dex-node-consumer
+    #restart: always
     build:
       context: ./
       dockerfile: dex-node-consumer/Dockerfile
@@ -114,11 +132,15 @@ services:
       - ./build:/opt/build
     extra_hosts:
       - host.docker.internal:host-gateway
+    depends_on:
+      - dev-haproxy
+      - dev-mysql
     networks:
       - dex-quantitative
 
   dev-node-consumer-node-zero:
     hostname: dex-node-consumer-node-zero
+    #restart: always
     build:
       context: ./
       dockerfile: dex-node-consumer-node-zero/Dockerfile
@@ -126,11 +148,15 @@ services:
       - ./build:/opt/build
     extra_hosts:
       - host.docker.internal:host-gateway
+    depends_on:
+      - dev-haproxy
+      - dev-mysql
     networks:
       - dex-quantitative
 
   dev-node-consumer-node-one:
     hostname: dex-node-consumer-node-one
+    #restart: always
     build:
       context: ./
       dockerfile: dex-node-consumer-node-one/Dockerfile
@@ -138,11 +164,15 @@ services:
       - ./build:/opt/build
     extra_hosts:
       - host.docker.internal:host-gateway
+    depends_on:
+      - dev-haproxy
+      - dev-mysql
     networks:
       - dex-quantitative
 
   dev-node-consumer-node-two:
     hostname: dex-node-consumer-node-two
+    #restart: always
     build:
       context: ./
       dockerfile: dex-node-consumer-node-two/Dockerfile
@@ -150,11 +180,15 @@ services:
       - ./build:/opt/build
     extra_hosts:
       - host.docker.internal:host-gateway
+    depends_on:
+      - dev-haproxy
+      - dev-mysql
     networks:
       - dex-quantitative
 
   dev-node-consumer-node-three:
     hostname: dex-node-consumer-node-three
+    #restart: always
     build:
       context: ./
       dockerfile: dex-node-consumer-node-three/Dockerfile
@@ -162,11 +196,15 @@ services:
       - ./build:/opt/build
     extra_hosts:
       - host.docker.internal:host-gateway
+    depends_on:
+      - dev-haproxy
+      - dev-mysql
     networks:
       - dex-quantitative
 
   dev-node-consumer-node-four:
     hostname: dex-node-consumer-node-four
+    #restart: always
     build:
       context: ./
       dockerfile: dex-node-consumer-node-four/Dockerfile
@@ -174,11 +212,15 @@ services:
       - ./build:/opt/build
     extra_hosts:
       - host.docker.internal:host-gateway
+    depends_on:
+      - dev-haproxy
+      - dev-mysql
     networks:
       - dex-quantitative
 
   dev-node-consumer-node-five:
     hostname: dex-node-consumer-node-five
+    #restart: always
     build:
       context: ./
       dockerfile: dex-node-consumer-node-five/Dockerfile
@@ -186,10 +228,8 @@ services:
       - ./build:/opt/build
     extra_hosts:
       - host.docker.internal:host-gateway
+    depends_on:
+      - dev-haproxy
+      - dev-mysql
     networks:
       - dex-quantitative
-
-networks:
-  dex-quantitative:
-    driver:
-      bridge

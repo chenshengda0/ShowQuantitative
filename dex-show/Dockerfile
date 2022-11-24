@@ -1,4 +1,4 @@
-FROM node
+FROM node:latest
 RUN apt -y update && apt -y upgrade && apt install -y man vim iproute2 xz-utils wget gcc git g++ sudo  inetutils-ping net-tools curl screen cron
 RUN apt install -y nginx
 WORKDIR /opt/build
