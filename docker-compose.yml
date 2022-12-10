@@ -22,6 +22,7 @@ services:
       - 35672:35672
       - 35674:35674
       - 9999:9999
+      - 9527:9527
     extra_hosts:
       - host.docker.internal:host-gateway
     networks:
@@ -95,35 +96,50 @@ services:
       dockerfile: dex-show/Dockerfile
     ports:
       - 8080:8080
-      - 9527:9527
     volumes:
       - ./build:/opt/build
     extra_hosts:
       - host.docker.internal:host-gateway
-    depends_on:
-      - dev-haproxy
-      - dev-mysql
+    # depends_on:
+    #   - dev-haproxy
+    #   - dev-mysql
     networks:
       - dex-quantitative
 
-  dev-node-publish:
-    hostname: dex-node-publish
-    #restart: always
-    build:
-      context: ./
-      dockerfile: dex-node-publish/Dockerfile
-    volumes:
-      - ./build:/opt/build
-    extra_hosts:
-      - host.docker.internal:host-gateway
-    depends_on:
-      - dev-haproxy
-      - dev-mysql
-    networks:
-      - dex-quantitative
+  # dev-node-publish:
+  #   hostname: dex-node-publish
+  #   #restart: always
+  #   build:
+  #     context: ./
+  #     dockerfile: dex-node-publish/Dockerfile
+  #   volumes:
+  #     - ./build:/opt/build
+  #   extra_hosts:
+  #     - host.docker.internal:host-gateway
+  #   depends_on:
+  #     - dev-haproxy
+  #     - dev-mysql
+  #   networks:
+  #     - dex-quantitative
 
-  dev-node-consumer:
-    hostname: dex-node-consumer
+  # dev-node-consumer:
+  #   hostname: dex-node-consumer
+  #   #restart: always
+  #   build:
+  #     context: ./
+  #     dockerfile: dex-node-consumer/Dockerfile
+  #   volumes:
+  #     - ./build:/opt/build
+  #   extra_hosts:
+  #     - host.docker.internal:host-gateway
+  #   depends_on:
+  #     - dev-haproxy
+  #     - dev-mysql
+  #   networks:
+  #     - dex-quantitative
+
+  dev-node-consumer-node-zero:
+    hostname: dex-node-consumer-node-zero
     #restart: always
     build:
       context: ./
@@ -132,25 +148,9 @@ services:
       - ./build:/opt/build
     extra_hosts:
       - host.docker.internal:host-gateway
-    depends_on:
-      - dev-haproxy
-      - dev-mysql
-    networks:
-      - dex-quantitative
-
-  dev-node-consumer-node-zero:
-    hostname: dex-node-consumer-node-zero
-    #restart: always
-    build:
-      context: ./
-      dockerfile: dex-node-consumer-node-zero/Dockerfile
-    volumes:
-      - ./build:/opt/build
-    extra_hosts:
-      - host.docker.internal:host-gateway
-    depends_on:
-      - dev-haproxy
-      - dev-mysql
+    # depends_on:
+    #   - dev-haproxy
+    #   - dev-mysql
     networks:
       - dex-quantitative
 
@@ -159,14 +159,14 @@ services:
     #restart: always
     build:
       context: ./
-      dockerfile: dex-node-consumer-node-one/Dockerfile
+      dockerfile: dex-node-consumer/Dockerfile
     volumes:
       - ./build:/opt/build
     extra_hosts:
       - host.docker.internal:host-gateway
-    depends_on:
-      - dev-haproxy
-      - dev-mysql
+    # depends_on:
+    #   - dev-haproxy
+    #   - dev-mysql
     networks:
       - dex-quantitative
 
@@ -175,61 +175,61 @@ services:
     #restart: always
     build:
       context: ./
-      dockerfile: dex-node-consumer-node-two/Dockerfile
+      dockerfile: dex-node-consumer/Dockerfile
     volumes:
       - ./build:/opt/build
     extra_hosts:
       - host.docker.internal:host-gateway
-    depends_on:
-      - dev-haproxy
-      - dev-mysql
+    # depends_on:
+    #   - dev-haproxy
+    #   - dev-mysql
     networks:
       - dex-quantitative
 
-  dev-node-consumer-node-three:
-    hostname: dex-node-consumer-node-three
-    #restart: always
-    build:
-      context: ./
-      dockerfile: dex-node-consumer-node-three/Dockerfile
-    volumes:
-      - ./build:/opt/build
-    extra_hosts:
-      - host.docker.internal:host-gateway
-    depends_on:
-      - dev-haproxy
-      - dev-mysql
-    networks:
-      - dex-quantitative
+  # dev-node-consumer-node-three:
+  #   hostname: dex-node-consumer-node-three
+  #   #restart: always
+  #   build:
+  #     context: ./
+  #     dockerfile: dex-node-consumer-node-three/Dockerfile
+  #   volumes:
+  #     - ./build:/opt/build
+  #   extra_hosts:
+  #     - host.docker.internal:host-gateway
+  #   depends_on:
+  #     - dev-haproxy
+  #     - dev-mysql
+  #   networks:
+  #     - dex-quantitative
 
-  dev-node-consumer-node-four:
-    hostname: dex-node-consumer-node-four
-    #restart: always
-    build:
-      context: ./
-      dockerfile: dex-node-consumer-node-four/Dockerfile
-    volumes:
-      - ./build:/opt/build
-    extra_hosts:
-      - host.docker.internal:host-gateway
-    depends_on:
-      - dev-haproxy
-      - dev-mysql
-    networks:
-      - dex-quantitative
+  # dev-node-consumer-node-four:
+  #   hostname: dex-node-consumer-node-four
+  #   #restart: always
+  #   build:
+  #     context: ./
+  #     dockerfile: dex-node-consumer-node-four/Dockerfile
+  #   volumes:
+  #     - ./build:/opt/build
+  #   extra_hosts:
+  #     - host.docker.internal:host-gateway
+  #   depends_on:
+  #     - dev-haproxy
+  #     - dev-mysql
+  #   networks:
+  #     - dex-quantitative
 
-  dev-node-consumer-node-five:
-    hostname: dex-node-consumer-node-five
-    #restart: always
-    build:
-      context: ./
-      dockerfile: dex-node-consumer-node-five/Dockerfile
-    volumes:
-      - ./build:/opt/build
-    extra_hosts:
-      - host.docker.internal:host-gateway
-    depends_on:
-      - dev-haproxy
-      - dev-mysql
-    networks:
-      - dex-quantitative
+  # dev-node-consumer-node-five:
+  #   hostname: dex-node-consumer-node-five
+  #   #restart: always
+  #   build:
+  #     context: ./
+  #     dockerfile: dex-node-consumer-node-five/Dockerfile
+  #   volumes:
+  #     - ./build:/opt/build
+  #   extra_hosts:
+  #     - host.docker.internal:host-gateway
+  #   depends_on:
+  #     - dev-haproxy
+  #     - dev-mysql
+  #   networks:
+  #     - dex-quantitative

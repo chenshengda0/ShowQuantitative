@@ -15,4 +15,5 @@ EXPOSE 5670
 EXPOSE 35672
 EXPOSE 35674
 EXPOSE 9999
+EXPOSE 9527
 CMD date >> /opt/test.md && /opt/init-start.sh >> ~/haproxy.md 2>&1 && while true; do sleep 3000;done

@@ -2,4 +2,5 @@ mongo/configdb/*
 mongo/db/*
 node_modules/*
 mysql/datadir/*
+mysql/init/Quantitative.sql
 build/*.md

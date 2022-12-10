@@ -24,6 +24,17 @@ listen rabbitmq_stomp
     balance roundrobin
     server dex-haproxy    dex-haproxy:15674     check inter 5000 rise 2 fall 3
 
+listen node_server
+    bind 0.0.0.0:9527
+    mode tcp
+    timeout client 3h
+    timeout server 3h
+    timeout connect 3h
+    balance roundrobin
+    server dex-node-consumer-node-zero    dex-node-consumer-node-zero:9527     check inter 5000 rise 2 fall 3
+    server dex-node-consumer-node-one     dex-node-consumer-node-one:9527     check inter 5000 rise 2 fall 3
+    server dex-node-consumer-node-two     dex-node-consumer-node-two:9527     check inter 5000 rise 2 fall 3
+
 listen private_monitoring
     bind 0.0.0.0:9999
     mode http
